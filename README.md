@@ -13,7 +13,7 @@ your-repo-name/
 ├── README.md
 ```
 
-**Quick start (no API key needed):**
+**Quick start:**
 
 ```bash
 pip install pandas requests python-dotenv
@@ -58,8 +58,6 @@ in this order:
    https://grouplens.org/datasets/movielens/latest/ into `data/raw/`
    automatically.
 
-`links.csv` is optional but recommended: it holds each movie's IMDb id, which
-makes every OMDb lookup exact and costs exactly one API call.
 
 ### OMDb API key
 
@@ -71,7 +69,7 @@ OMDB_API_KEY=your_key_here
 ```
 
 (or `export OMDB_API_KEY=...` in the shell). The key is **never** written in the
-code. Do not commit `.env` (see section 8).
+code.
 
 ### Run
 
@@ -87,9 +85,8 @@ query in `queries.sql`.
 | `python etl.py` | Full run, then print the pipeline report and the 4 answers |
 | `python etl.py --log-level INFO` | Same, with a log line for every step |
 | `python etl.py --offline` | No API calls; rebuild using cached OMDb answers only |
-| `python etl.py --max-api-calls 200` | Cap API usage for this run (default 950) |
 | `python etl.py --workers 8 --rps 10` | Parallel lookups and the shared request rate (defaults) |
-| `python etl.py --help` | All options (`--data-dir`, `--db-path`, `--cache-path`, `--log-level`) |
+
 
 Outputs (created on first run):
 
@@ -216,7 +213,6 @@ stay `NULL` for movies that have not been enriched yet.
 * Q4 averages every rating of the movies released in each year.
 * Movies OMDb cannot find stay in the database with empty OMDb columns. The
   "not found" answer is cached, so they are not looked up again.
-* `timestamp` is kept as given in ratings.csv (Unix seconds).
 
 ## 6. Challenges and how they were solved
 
